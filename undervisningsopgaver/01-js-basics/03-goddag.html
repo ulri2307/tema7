@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h1>Hvad er dit navn?</h1>
+
+    <input type="text" id="name">
+    <button>Enter og kig i konsol</button>
+
+
+    <script>
+        const knap = document.querySelector("button");
+        knap.addEventListener("click", navnIndtast);
+
+        function navnIndtast() {
+            let brugernavn = document.querySelector("#name").value;
+            console.log(`Goddag ${brugernavn}!`);
+        }
+
+    </script>
+</body>
+
+</html>
