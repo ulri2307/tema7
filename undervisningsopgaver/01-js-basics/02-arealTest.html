@@ -10,8 +10,21 @@
 
 <body>
     <script>
+        let længde = 40;
+        let bredde = 5;
+        let areal = længde * bredde;
+
+        let resultat = `Længde er ${længde} m og bredden er ${bredde} m. Arealet er ${areal} kvardratmeter`;
+        console.log(resultat);
 
 
+        if (areal <= 100) {
+            console.log('Arealet er for lille');
+        } else if (areal < 199) {
+            console.log('Arealet er ok');
+        } else {
+            console.log('Arealet er for stort');
+        }
     </script>
 </body>
 
