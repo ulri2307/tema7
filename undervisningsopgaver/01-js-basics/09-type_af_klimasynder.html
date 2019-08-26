@@ -7,11 +7,35 @@
 </head>
 
 <body>
-
+    <h1>Hvor meget CO2 har du udledt?</h1>
+    <p>Antal timer du har fløjet</p>
+    <input type="number" id="timer">
+    <button>Udregn og kig i konsol</button>
 
     <script>
+        //Når det klikkes på knappen
+        const knap = document.querySelector("button");
+        knap.addEventListener("click", button_clicked);
 
+        function button_clicked() {
 
+            const tal = 109;
+            let timer = document.querySelector("#timer").value;
+
+            let co2 = timer * tal;
+
+            let resultat = `Ved ${timer} timers flyrejse har du udledt ${co2} kg CO2.`;
+
+            if (co2 < 100) {
+                console.log(`${resultat} Tæt på Thunberg.`);
+            } else if (co2 < 200) {
+                console.log(`${resultat} Ja ja, du behøver ikke at melde dig ud af Å!.`);
+            } else if (co2 < 600) {
+                console.log(`${resultat} Det er godt for turismen i nordeuropa.`);
+            } else {
+                console.log(`${resultat} Nå ja vi kan jo altid kolonisere en anden planet...`);
+            }
+        }
     </script>
 
 
