@@ -9,9 +9,33 @@
 </head>
 
 <body>
+    <h1>Beregn areal</h1>
+    <p>Hvad er længden?</p>
+    <input type="number" id="længde">
+    <p>Hvad er bredden?</p>
+    <input type="number" id="bredde">
+
+    <button>Udregn og kig i konsolen</button>
+
+
     <script>
+        //Når der klikkes på 'udregn'
+        const knap = document.querySelector("button");
+        knap.addEventListener("click", arealUdregnes);
 
+        function arealUdregnes() {
+            //længder og bredder indtastes af brugeren
+            let længde = document.querySelector("#længde").value;
+            let bredde = document.querySelector("#bredde").value;
 
+            //Areal udregnes
+            let areal = længde * bredde;
+
+            //Arealet vises
+            let resultat = `Længde er ${længde} m og bredden er ${bredde} m. Arealet er ${areal} kvardratmeter`;
+
+            console.log(resultat);
+        }
     </script>
 </body>
 
