@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #green {
+            background-color: green;
+            height: 20vw;
+            width: 20vw;
+        }
+
+        #red {
+            background-color: red;
+            height: 20vw;
+            width: 20vw;
+            border-radius: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            width: 20vw;
+        }
+
+        #red img {
+            width: 90px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="green"></div>
+    <div id="red">
+        <img src="http://mabe-kea.dk/E19/pics/fox.png">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            const red = document.querySelector("#red");
+            const green = document.querySelector("#green");
+
+            red.innerHTML = '<img src="http://mabe-kea.dk/E19/pics/pig.png" alt="gris">';
+            green.innerHTML = '<img src="http://mabe-kea.dk/E19/pics/frog.png" alt="frø">';
+
+
+            let fox = document.createElement("img");
+            fox.src = "http://mabe-kea.dk/E19/pics/fox.png";
+            red.appendChild(fox);
+        }
+
+    </script>
+
+</body>
+
+</html>
