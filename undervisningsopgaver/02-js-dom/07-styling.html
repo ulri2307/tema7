@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #green {
+            background-color: green;
+            height: 20vw;
+            width: 20vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #red {
+            background-color: red;
+            height: 20vw;
+            width: 20vw;
+            border-radius: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            width: 10vw;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="green"></div>
+    <div id="red"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            const red = document.querySelector("#red");
+            const green = document.querySelector("#green");
+
+            red.innerHTML = '<img src="http://mabe-kea.dk/E19/pics/pig.png" alt="gris">';
+            green.innerHTML = '<img src="http://mabe-kea.dk/E19/pics/frog.png" alt="frø">';
+
+            green.addEventListener("click", greenClick);
+            red.addEventListener("click", redClick);
+
+        }
+
+
+        function greenClick() {
+            console.log("Grøn klikket på");
+            let greenStart = green.innerHTML;
+            green.innerHTML = red.innerHTML;
+            red.innerHTML = greenStart;
+        }
+
+
+        function redClick() {
+            console.log("Rød klikket på");
+            green.removeEventListener("click", greenClick);
+        }
+    </script>
+
+</body>
+
+</html>
