@@ -12,6 +12,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: 0.5s;
         }
 
         #red {
@@ -22,6 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: 0.5s;
         }
 
         img {
@@ -57,12 +59,14 @@
             let greenStart = green.innerHTML;
             green.innerHTML = red.innerHTML;
             red.innerHTML = greenStart;
+
         }
 
 
         function redClick() {
             console.log("Rød klikket på");
             green.removeEventListener("click", greenClick);
+            green.style.backgroundColor = "red";
         }
     </script>
 
