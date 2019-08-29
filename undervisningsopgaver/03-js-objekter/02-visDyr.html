@@ -10,8 +10,11 @@
 <body>
 
     <article>
+        <h2></h2>
+        <img src="" alt="">
+        <p class="type"></p>
+        <p class="levested"></p>
     </article>
-    <img src="" alt="">
 
     <script>
         document.addEventListener("DOMContentLoaded", start);
@@ -24,19 +27,23 @@
                 "levested": "svinefarme"
             }
 
-            let tekst = `Dyr: ${dyr.navn}, type: ${dyr.type}, levested: ${dyr.levested}.`
+            let tekst1 = `Type: ${dyr.type}.`;
+            let tekst2 = `Levested: ${dyr.levested}.`;
 
 
-            const om = document.querySelector("article");
-            const omDyret = `${tekst}`;
-            om.textContent = omDyret;
+            const navnContainer = document.querySelector("h2");
+            navnContainer.textContent = dyr.navn;
 
             const grisBilled = document.querySelector("img");
             grisBilled.src = dyr.billede;
 
+            const typeContainer = document.querySelector(".type");
+            typeContainer.textContent = `${tekst1}`;
+
+            const levestedContainer = document.querySelector(".levested");
+            levestedContainer.textContent = `${tekst2}`;
 
             console.log(dyr);
-            console.log(tekst);
 
         }
     </script>
