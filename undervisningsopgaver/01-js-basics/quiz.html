@@ -8,38 +8,123 @@
 </head>
 
 <body>
-    <h1>Hvor meget CO2 har du udledt?</h1>
-    <p>Antal timer du har fløjet</p>
-    <input type="number" id="timer">
-    <button>Udregn og kig i konsol</button>
+
+    <h1>Den store tid quiz!</h1>
+
+    <h2>Hvor mange minutter er der på en time?</h2>
+    <p>Indtast svar her</p>
+    <input type="number" id="svar1">
+    <button class="enter1">Enter</button>
+
+    <h2>Hvor mange timer er der på et døgn?</h2>
+    <p>Indtast svar her</p>
+    <input type="number" id="svar2">
+    <button class="enter2">Enter</button>
+
+    <h2>Hvor mange døgn er der på en uge?</h2>
+    <p>Indtast svar her</p>
+    <input type="number" id="svar3">
+    <button class="enter3">Enter</button>
+
+    <h2>Hvor mange uger er der (for det meste) på en måned?</h2>
+    <p>Indtast svar her</p>
+    <input type="number" id="svar4">
+    <button class="enter4">Enter</button>
+
+    <h2>Hvor mange måneder er der på et år?</h2>
+    <p>Indtast svar her</p>
+    <input type="number" id="svar5">
+    <button class="enter5">Enter</button>
 
     <script>
+        let point = 0;
+
+        let forkertPoint = 0;
+
+        const forkertSvar = `Desværre! Prøv igen!`;
+
         //Når det klikkes på knappen
-        const knap = document.querySelector("button");
-        knap.addEventListener("click", button_clicked);
+        const knap1 = document.querySelector(".enter1");
+        knap1.addEventListener("click", clicked1);
 
-        function button_clicked() {
+        const knap2 = document.querySelector(".enter2");
+        knap2.addEventListener("click", clicked2);
 
-            const tal = 109;
-            let timer = document.querySelector("#timer").value;
+        const knap3 = document.querySelector(".enter3");
+        knap3.addEventListener("click", clicked3);
 
-            let co2 = timer * tal;
+        const knap4 = document.querySelector(".enter4");
+        knap4.addEventListener("click", clicked4);
 
-            let resultat = `Ved ${timer} timers flyrejse har du udledt ${co2} kg CO2.`;
+        const knap5 = document.querySelector(".enter5");
+        knap5.addEventListener("click", clicked5);
 
-            if (timer <= 0) {
-                console.log(`Indtast gyldige timer!`);
-            } else if (co2 < 100) {
-                console.log(`${resultat} Tæt på Thunberg.`);
-            } else if (co2 < 200) {
-                console.log(`${resultat} Ja ja, du behøver ikke at melde dig ud af Å!.`);
-            } else if (co2 < 600) {
-                console.log(`${resultat} Det er godt for turismen i nordeuropa.`);
+        function clicked1() {
+
+            let svar1 = document.querySelector("#svar1").value;
+
+            if (svar1 == 60) {
+                point++;
+                console.log(`Helt korrekt!`);
             } else {
-                console.log(`${resultat} Nå ja vi kan jo altid kolonisere en anden planet...`);
+                forkertPoint++;
+                console.log(`${forkertSvar}`);
             }
         }
 
+        function clicked2() {
+
+            let svar2 = document.querySelector("#svar2").value;
+
+            if (svar2 == 24) {
+                point++;
+                console.log(`Helt korrekt!`);
+            } else {
+                forkertPoint++;
+                console.log(`${forkertSvar}`);
+            }
+        }
+
+        function clicked3() {
+
+            let svar3 = document.querySelector("#svar3").value;
+
+            if (svar3 == 7) {
+                point++;
+                console.log(`Helt korrekt!`);
+            } else {
+                forkertPoint++;
+                console.log(`${forkertSvar}`);
+            }
+        }
+
+        function clicked4() {
+
+            let svar4 = document.querySelector("#svar4").value;
+
+            if (svar4 == 4) {
+                point++;
+                console.log(`Helt korrekt!`);
+            } else {
+                forkertPoint++;
+                console.log(`${forkertSvar}`);
+            }
+        }
+
+        function clicked5() {
+
+            let svar5 = document.querySelector("#svar5").value;
+
+            if (svar5 == 12) {
+                point++;
+                console.log(`Helt korrekt!`);
+            } else {
+                forkertPoint++;
+                console.log(`${forkertSvar}`);
+            }
+
+            console.log(`Du er færdig! Du fik ${point} korrekte og ${forkertPoint} forkerte`);
+        }
     </script>
 
 
