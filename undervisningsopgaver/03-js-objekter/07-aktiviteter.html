@@ -7,20 +7,31 @@
 
     <style>
         img {
-            width: 100%;
+            width: 40%;
+            max-height: 40vw;
         }
 
         .data {
             margin: 5px;
             display: grid;
             grid-gap: 10px;
-            grid-template-columns: repeat(4, 1fr);
-            max-width: 80vw;
+            grid-template-columns: repeat(1, 1fr);
         }
 
         article {
             border: solid black 1px;
         }
+
+        @media screen and (min-width: 501px) {
+            .data {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (min-width: 1025px) {
+            .data {
+                grid-template-columns: repeat(3, 1fr);
+            }
     </style>
 
 </head>
@@ -33,8 +44,8 @@
         <article>
             <h1></h1>
             <img src="" alt="">
-            <p class="type"></p>
-            <p class="levested"></p>
+            <h6 class="info"></h6>
+            <p class="beskrivelse"></p>
         </article>
     </template>
 
@@ -43,45 +54,41 @@
 
         function start() {
 
-            const dyr = [{
-                "navn": "Frø",
-                "type": "amfibie",
-                "billede": "http://mabe-kea.dk/E19/pics/frog.png",
-                "levested": "vandhullet"
+            const beg = [{
+                "overskrift": "Miljøet skal tilgodeses ved Frederikssundsmotorvejen",
+                "billede": "https://dit-roskilde.dk/wp-content/uploads/2019/08/Frederikssundmotorvejen_oversigtskort_Vejdirektoratet-200x150.jpg",
+                "beskrivelse": "Plan- og Teknikudvalget har besluttet, at Roskilde Kommune skal gå ind i arbejdet med miljøpåvirkninger"
             }, {
-                "navn": "Gris",
-                "type": "pattedyr",
-                "billede": "http://mabe-kea.dk/E19/pics/pig.png",
-                "levested": "svinefarme"
+                "overskrift": "Disse gamle computerspil er steget i værdi",
+                "billede": "https://dit-roskilde.dk/wp-content/uploads/2019/08/COLOURBOX8411362-200x150.jpg",
+                "info": "27. august 2019",
+                "beskrivelse": "Du skal klatre, kæmpe mod ildspyende dæmoner eller hoppe over farlige bølger."
             }, {
-                "navn": "Ræv",
-                "type": "pattedyr",
-                "billede": "http://mabe-kea.dk/E19/pics/fox.png",
-                "levested": "skoven"
-
+                "overskrift": "Årets Hyundai-forhandler",
+                "billede": "https://dit-roskilde.dk/wp-content/uploads/2019/06/preben-mortensen-biler-pressefoto4-200x150.jpg",
+                "info": "27. august 2019",
+                "beskrivelse": "Vidste du at, Preben Mortensens Biler A/S er blevet årets Hyundai-forhandler?"
             }, {
-                "navn": "Sild",
-                "type": "fisk",
-                "billede": "http://mabe-kea.dk/E19/pics/sild.jpg",
-                "levested": "havet"
-
+                "overskrift": "Alternativ til den traditionelle børnehave",
+                "billede": "https://dit-roskilde.dk/wp-content/uploads/2019/02/sandkasse-sand-leg-sommer-børn-vuggestue-børnehave-abw-200x150.jpg",
+                "info": "26. august 2019",
+                "beskrivelse": "Ifølge prognosen kommer der flere børn til i dagtilbud de kommende år."
             }, {
-                "navn": "Krokodille",
-                "type": "krybdyr",
-                "billede": "http://mabe-kea.dk/E19/pics/kroko.jpg",
-                "levested": "floden"
-
+                "overskrift": "SMACK Festival",
+                "billede": "https://dit-roskilde.dk/wp-content/uploads/2019/08/Smack_festival-300x216.jpg",
+                "info": "26. august 2019",
+                "beskrivelse": "Musicon bliver omdannet til et mekka for gadekulturer Gadeidræt, kunst og musik går op i en højere enhed på Musicon, når det igen er tid til SMACK Festival."
             }]
 
             const container = document.querySelector(".data");
             const templateContainer = document.querySelector("template");
 
-            dyr.forEach(hvertDyr => {
+            beg.forEach(alleBeg => {
                 let klon = templateContainer.cloneNode(true).content;
-                klon.querySelector("h1").textContent = hvertDyr.navn;
-                klon.querySelector("img").src = hvertDyr.billede;
-                klon.querySelector(".type").textContent = hvertDyr.type;
-                klon.querySelector(".levested").textContent = hvertDyr.levested;
+                klon.querySelector("h1").textContent = alleBeg.overskrift;
+                klon.querySelector("img").src = alleBeg.billede;
+                klon.querySelector(".info").textContent = alleBeg.info;
+                klon.querySelector(".beskrivelse").textContent = alleBeg.beskrivelse;
                 container.appendChild(klon);
             })
 
