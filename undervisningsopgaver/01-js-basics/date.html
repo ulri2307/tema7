@@ -2,13 +2,57 @@
 <html lang="da">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style></style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
 </head>
 
 <body>
-    <script></script>
+
+    <h1>Kan du "date" din date?</h1>
+
+    <p>Din egen alder :</p>
+    <input type="number" id="svar1">
+
+    <p>Din dates alder:</p>
+    <input type="number" id="svar2">
+    <button class="enter">Enter</button>
+
+    <script>
+        //Når det klikkes på knappen
+        const knap = document.querySelector(".enter");
+        knap.addEventListener("click", clicked);
+
+
+        function clicked() {
+
+            let tal1 = 2;
+
+            let tal2 = 7;
+
+            let egenAlder = document.querySelector("#svar1").value;
+
+            let datesAlder = document.querySelector("#svar2").value;
+
+            let egenAlderUdregnet = egenAlder / tal1 + tal2;
+
+            let datesAlderUdregnet = datesAlder / tal1 + tal2;
+
+            console.log(`${egenAlderUdregnet}`);
+            console.log(`${datesAlderUdregnet}`);
+
+
+            if (egenAlder <= 15 || datesAlder <= 15) {
+                console.log(`Den går ikke! Begge skal være over 15!`);
+            } else if (egenAlder >= datesAlderUdregnet && datesAlder >= egenAlderUdregnet) {
+                console.log(`Hurra! I passer perfekt sammen!`);
+            } else {
+                console.log(`Uuuh, den alder der.. Den er ikke helt i skabet.`);
+            }
+        }
+    </script>
+
+
 </body>
 
 </html>
