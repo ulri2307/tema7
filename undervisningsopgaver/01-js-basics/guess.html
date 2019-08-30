@@ -2,13 +2,48 @@
 <html lang="da">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style></style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
 </head>
 
 <body>
-    <script></script>
+
+    <h1>Gæt et tal fra 0-20!</h1>
+    <p>Prøv lykken:</p>
+    <input type="number" id="svar">
+    <button class="enter">Enter</button>
+
+
+    <script>
+        let forkertSvar = 0;
+
+        let randomTal = Math.floor(Math.random() * 21);
+
+        console.log(`${randomTal}`);
+
+        //Når det klikkes på knappen
+        const knap = document.querySelector(".enter");
+        knap.addEventListener("click", clicked);
+
+
+        function clicked() {
+
+            let forsøg = document.querySelector("#svar").value;
+
+            if (forsøg == randomTal) {
+                console.log(`Det var rigtigt! Tallet du skulle gætte var netop ${randomTal}. Du brugte ${forkertSvar} forsøg på at gætte det. Vil du prøve igen?`);
+            } else if (forsøg > randomTal) {
+                forkertSvar++;
+                console.log("Øv! Prøv igen...");
+            } else {
+                forkertSvar++;
+                console.log("Øv! Prøv igen...");
+            }
+        }
+    </script>
+
+
 </body>
 
 </html>
