@@ -24,9 +24,15 @@
 </head>
 
 <body>
-    <div id="display"></div>
+    <div id="display">
+    </div>
 
     <script>
+        let playlist = ["Bohemian Rhapsody", "Don't stop me now", "Another one bites the dust", "Under pressure", "We will rock you", "We are the champions", "Sombody to love", "I want to break free", "Radio ga ga", "Love of my life"];
+
+        playlist.forEach(song => {
+            document.querySelector("#display").innerHTML += `${song}</br>`;
+        })
     </script>
 </body>
 
