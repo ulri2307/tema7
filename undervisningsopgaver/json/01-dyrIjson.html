@@ -21,7 +21,6 @@
         article {
             border: solid black 1px;
         }
-
     </style>
 
 </head>
@@ -40,44 +39,23 @@
     </template>
 
     <script>
-        document.addEventListener("DOMContentLoaded", start);
+        let alleDyr = [];
 
-        function start() {
+        document.addEventListener("DOMContentLoaded", hentJson);
 
-            /*const dyr = [{
-                "navn": "Frø",
-                "type": "amfibie",
-                "billede": "http://mabe-kea.dk/E19/pics/frog.png",
-                "levested": "vandhullet"
-            }, {
-                "navn": "Gris",
-                "type": "pattedyr",
-                "billede": "http://mabe-kea.dk/E19/pics/pig.png",
-                "levested": "svinefarme"
-            }, {
-                "navn": "Ræv",
-                "type": "pattedyr",
-                "billede": "http://mabe-kea.dk/E19/pics/fox.png",
-                "levested": "skoven"
 
-            }, {
-                "navn": "Sild",
-                "type": "fisk",
-                "billede": "http://mabe-kea.dk/E19/pics/sild.jpg",
-                "levested": "havet"
 
-            }, {
-                "navn": "Krokodille",
-                "type": "krybdyr",
-                "billede": "http://mabe-kea.dk/E19/pics/kroko.jpg",
-                "levested": "floden"
+        async function hentJson() {
+            const jsonData = await fetch("dyr.json");
+            alleDyr = await jsonData.json();
+            visDyr();
+        }
 
-            }]*/
-
+        function visDyr() {
             const container = document.querySelector(".data");
             const templateContainer = document.querySelector("template");
 
-            dyr.forEach(hvertDyr => {
+            alleDyr.forEach(hvertDyr => {
                 let klon = templateContainer.cloneNode(true).content;
                 klon.querySelector("h1").textContent = hvertDyr.navn;
                 klon.querySelector("img").src = hvertDyr.billede;
@@ -85,9 +63,7 @@
                 klon.querySelector(".levested").textContent = hvertDyr.levested;
                 container.appendChild(klon);
             })
-
         }
-
     </script>
 
 </body>
