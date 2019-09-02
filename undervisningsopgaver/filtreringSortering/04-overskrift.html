@@ -19,6 +19,10 @@
 
         }
 
+        h1 {
+            text-align: center;
+        }
+
         button {
             border: solid 0.5px bisque;
             border-radius: 10px;
@@ -49,12 +53,12 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-
     </style>
 
 </head>
 
 <body>
+    <h1>Alle</h1>
     <nav>
         <button class="filter" data-køn="alle">Alle</button>
         <button class="filter" data-køn="m">Mænd</button>
@@ -123,9 +127,9 @@
 
         function filtrering() {
             filter = this.dataset.køn;
+            document.querySelector("h1").textContent = this.textContent;
             visPersoner();
         }
-
     </script>
 
 </body>
