@@ -49,7 +49,6 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-
     </style>
 
 </head>
@@ -58,7 +57,7 @@
     <nav>
         <button class="filter" data-køn="alle">Alle</button>
         <button class="filter" data-køn="m">Mænd</button>
-        <button class="filter valgt" data-køn="k">Kvinder</button>
+        <button class="filter" data-køn="k">Kvinder</button>
         <button class="filter" data-køn="andet">Andet</button>
     </nav>
 
@@ -80,7 +79,8 @@
 
     <script>
         let allePersoner = [];
-        const filter = "k";
+        let filter = "alle";
+
 
         document.addEventListener("DOMContentLoaded", hentJson);
 
@@ -90,14 +90,16 @@
             const jsonData = await fetch("https://spreadsheets.google.com/feeds/list/1Xge7slZ9dEOTCn1Yxl3OE4xgvrXOL8Y_iu3WN1yGB1U/od6/public/values?alt=json");
             allePersoner = await jsonData.json();
             visPersoner();
+            addEventListenersToButtons();
         }
 
         function visPersoner() {
             const container = document.querySelector(".data");
             const templateContainer = document.querySelector("template");
+            container.innerHTML = "";
 
             allePersoner.feed.entry.forEach((person) => {
-                if (person.gsx$køn.$t == filter) {
+                if (filter == "alle" || filter == person.gsx$køn.$t) {
                     let klon = templateContainer.cloneNode(true).content;
                     klon.querySelector("h2").textContent = person.gsx$navn.$t;
                     klon.querySelector(".github").textContent = person.gsx$github.$t;
@@ -109,10 +111,19 @@
                     klon.querySelector(".historie").textContent = person.gsx$historie.$t;
                     container.appendChild(klon);
                 }
-
             })
         }
 
+        function addEventListenersToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+        }
+
+        function filtrering() {
+            filter = this.dataset.køn;
+            visPersoner();
+        }
     </script>
 
 </body>
