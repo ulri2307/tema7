@@ -14,13 +14,55 @@
 <body>
 
     <h1>Person</h1>
-    <nav>
-        <button>Tilbage</button>
-    </nav>
+
+    <main id="single">
+        <button class="luk">Tilbage</button>
+        <section class="indhold">
+            <article class="enkeltPerson">
+                <h2></h2>
+                <p class="github"></p>
+                <img src="" alt="" class="billede">
+                <p class="alder"></p>
+                <p class="køn"></p>
+                <a href="" class="email"></a>
+                <p class="hold"></p>
+                <p class="historie"></p>
+            </article>
+        </section>
+    </main>
 
 
     <script>
-        console.log(location.href);
+        let urlParams = new URLSearchParams(window.location.search);
+        let github = urlParams.get("github");
+        let personer;
+
+        document.addEventListener("DOMContentLoaded", hentJson);
+
+        async function hentJson() {
+            let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/1Xge7slZ9dEOTCn1Yxl3OE4xgvrXOL8Y_iu3WN1yGB1U/od6/public/values?alt=json");
+            personer = await jsonData.json();
+            visPerson();
+            document.querySelector(".luk").addEventListener("click", () => {
+                history.back();
+            })
+
+        }
+
+        function visPerson() {
+            personer.feed.entry.forEach((person) => {
+                if (person.gsx$github.$t == github) {
+                    document.querySelector("h2").textContent = person.gsx$navn.$t;
+                    document.querySelector(".github").textContent = person.gsx$github.$t;
+                    document.querySelector("img").src = person.gsx$billede.$t;
+                    document.querySelector(".alder").textContent = person.gsx$alder.$t;
+                    document.querySelector(".køn").textContent = person.gsx$køn.$t;
+                    document.querySelector(".email").textContent = person.gsx$email.$t;
+                    document.querySelector(".hold").textContent = person.gsx$hold.$t;
+                    document.querySelector(".historie").textContent = person.gsx$historie.$t;
+                }
+            })
+        }
 
     </script>
 
