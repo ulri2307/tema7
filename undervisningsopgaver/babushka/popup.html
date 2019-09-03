@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        img {
+            width: 100%;
+        }
+
+        article {
+            border: solid black 1px;
+        }
+
+        nav {
+            text-align: center;
+
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .data {
+            margin: 5px;
+            display: grid;
+            grid-gap: 30px;
+            grid-template-columns: repeat(1, 1fr);
+            max-width: 100%;
+        }
+
+        @media screen and (min-width: 501px) {
+            .data {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (min-width: 1025px) {
+            .data {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <section class="data"></section>
+
+
+    <template>
+        <article>
+            <img src="" alt="">
+            <h3 class="navn"></h3>
+            <p class="kort"></p>
+            <p class="pris"></p>
+            <img src="imgs/small/" alt="">
+        </article>
+    </template>
+
+    <script>
+        let alleRetter = [];
+
+        document.addEventListener("DOMContentLoaded", hentJson);
+
+        async function hentJson() {
+            const jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+            alleRetter = await jsonData.json();
+            visRetter();
+
+        }
+
+        function visRetter() {
+            const container = document.querySelector(".data");
+            const templateContainer = document.querySelector("template");
+            container.innerHTML = "";
+
+            alleRetter.feed.entry.forEach((ret) => {
+                let klon = templateContainer.cloneNode(true).content;
+                klon.querySelector("img").src = `imgs/small/${ret.gsx$billede.$t}.jpg`;
+                klon.querySelector(".navn").textContent = ret.gsx$navn.$t;
+                klon.querySelector(".kort").textContent = ret.gsx$kort.$t;
+                klon.querySelector(".pris").textContent = `Pris: ${ret.gsx$pris.$t}kr.`;
+                container.appendChild(klon);
+            })
+        }
+    </script>
+
+</body>
+
+</html>
