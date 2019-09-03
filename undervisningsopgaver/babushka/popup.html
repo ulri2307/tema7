@@ -23,12 +23,49 @@
             text-align: center;
         }
 
+        button {
+            border: solid 0.5px bisque;
+            border-radius: 10px;
+        }
+
+        #popup {
+            position: fixed;
+            top: 0;
+            background-color: red;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        #popup .billede {
+            max-height: 50vh;
+            max-width: 30vw;
+        }
+
+        .luk {
+            position: fixed;
+            font-size: 2rem;
+            right: 0;
+        }
+
+        .indhold {
+            width: 40vw;
+            min-height: 40vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
         .data {
             margin: 5px;
             display: grid;
             grid-gap: 30px;
             grid-template-columns: repeat(1, 1fr);
             max-width: 100%;
+        }
+
+        .valgt {
+            background-color: antiquewhite;
         }
 
         @media screen and (min-width: 501px) {
@@ -48,6 +85,29 @@
 
 <body>
 
+    <div id="popup">
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltRet">
+                <img class="billede" src="" alt="">
+                <h2 class="navn"></h2>
+                <h4 class="oprindelse"></h4>
+                <p class="lang"></p>
+                <p class="pris"></p>
+            </article>
+        </section>
+    </div>
+
+    <h2>Alle</h2>
+    <nav>
+        <button class="filter" data-kategori="alle">Alle</button>
+        <button class="filter" data-kategori="forretter">Forretter</button>
+        <button class="filter" data-kategori="hovedretter">Hovedretter</button>
+        <button class="filter" data-kategori="desserter">Desserter</button>
+        <button class="filter" data-kategori="sideorders">Sideorders</button>
+        <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
+    </nav>
+
     <section class="data"></section>
 
 
@@ -57,12 +117,13 @@
             <h3 class="navn"></h3>
             <p class="kort"></p>
             <p class="pris"></p>
-            <img src="imgs/small/" alt="">
+            <img src="" alt="">
         </article>
     </template>
 
     <script>
         let alleRetter = [];
+        let filter = "alle";
 
         document.addEventListener("DOMContentLoaded", hentJson);
 
@@ -70,7 +131,7 @@
             const jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
             alleRetter = await jsonData.json();
             visRetter();
-
+            addEventListenersToButtons();
         }
 
         function visRetter() {
@@ -79,13 +140,56 @@
             container.innerHTML = "";
 
             alleRetter.feed.entry.forEach((ret) => {
-                let klon = templateContainer.cloneNode(true).content;
-                klon.querySelector("img").src = `imgs/small/${ret.gsx$billede.$t}.jpg`;
-                klon.querySelector(".navn").textContent = ret.gsx$navn.$t;
-                klon.querySelector(".kort").textContent = ret.gsx$kort.$t;
-                klon.querySelector(".pris").textContent = `Pris: ${ret.gsx$pris.$t}kr.`;
-                container.appendChild(klon);
+                if (filter == "alle" || filter == ret.gsx$kategori.$t) {
+                    let klon = templateContainer.cloneNode(true).content;
+                    klon.querySelector("img").src = `imgs/small/${ret.gsx$billede.$t}-sm.jpg`;
+                    klon.querySelector(".navn").textContent = ret.gsx$navn.$t;
+                    klon.querySelector(".kort").textContent = ret.gsx$kort.$t;
+                    klon.querySelector(".pris").textContent = `Pris: ${ret.gsx$pris.$t}kr.`;
+                    container.appendChild(klon);
+                    container.lastElementChild.addEventListener("click", () => {
+                        visSingle(ret);
+                    })
+                }
             })
+
+        }
+
+        function visSingle(ret) {
+
+            const forret = "forret";
+            const hoved = "forret";
+            const dessert = "forret";
+            const drikke = "forret";
+            const side = "forret";
+            document.querySelector("#popup").style.display = "block";
+            document.querySelector("#popup .luk").addEventListener("click", lukSingle);
+
+            document.querySelector(".enkeltRet .billede").src = `imgs/small/${ret.gsx$billede.$t}-sm.jpg`;
+            document.querySelector(".enkeltRet h2").textContent = ret.gsx$navn.$t;
+            document.querySelector(".enkeltRet .oprindelse").textContent = `En del af vores ${ret.gsx$kategori.$t}. Retten er oprindeligt fra ${ret.gsx$oprindelse.$t}.`;
+            document.querySelector(".enkeltRet .lang").textContent = ret.gsx$lang.$t;
+            document.querySelector(".enkeltRet .pris").textContent = `Pris: ${ret.gsx$pris.$t}kr.`;
+        }
+
+        function lukSingle() {
+            document.querySelector("#popup").style.display = "none";
+        }
+
+        function addEventListenersToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+        }
+
+        function filtrering() {
+            filter = this.dataset.kategori;
+            document.querySelector("h2").textContent = this.textContent;
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.classList.remove("valgt");
+            })
+            this.classList.add("valgt");
+            visRetter();
         }
     </script>
 
