@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        img {
+            width: 100%;
+        }
+
+        article {
+            border: solid black 1px;
+        }
+
+        nav {
+            text-align: center;
+
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        button {
+            border: solid 0.5px bisque;
+            border-radius: 10px;
+        }
+
+        #popup {
+            position: fixed;
+            top: 0;
+            background-color: red;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        #popup .billede {
+            max-height: 50vh;
+            max-width: 30vw;
+        }
+
+        .luk {
+            position: fixed;
+            font-size: 2rem;
+            right: 0;
+        }
+
+        .indhold {
+            width: 40vw;
+            min-height: 40vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
+        .data {
+            margin: 5px;
+            display: grid;
+            grid-gap: 30px;
+            grid-template-columns: repeat(1, 1fr);
+            max-width: 100%;
+        }
+
+        .valgt {
+            background-color: antiquewhite;
+        }
+
+        @media screen and (min-width: 501px) {
+            .data {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (min-width: 1025px) {
+            .data {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="popup">
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltPerson">
+                <h2></h2>
+                <p class="github"></p>
+                <img src="" alt="" class="billede">
+                <p class="alder"></p>
+                <p class="køn"></p>
+                <a href="" class="email"></a>
+                <p class="hold"></p>
+                <p class="historie"></p>
+            </article>
+        </section>
+    </div>
+
+    <h1>Alle</h1>
+    <nav>
+        <button class="filter" data-køn="alle">Alle</button>
+        <button class="filter" data-køn="m">Mænd</button>
+        <button class="filter" data-køn="k">Kvinder</button>
+        <button class="filter" data-køn="andet">Andet</button>
+    </nav>
+
+    <section class="data"></section>
+
+
+    <template>
+        <article>
+            <h2></h2>
+            <p class="github"></p>
+            <img src="" alt="">
+            <p class="alder"></p>
+            <p class="køn"></p>
+            <a href="" class="email"></a>
+            <p class="hold"></p>
+            <p class="historie"></p>
+        </article>
+    </template>
+
+    <script>
+        let allePersoner = [];
+        let filter = "alle";
+
+
+        document.addEventListener("DOMContentLoaded", hentJson);
+
+
+
+        async function hentJson() {
+            const jsonData = await fetch("https://spreadsheets.google.com/feeds/list/1Xge7slZ9dEOTCn1Yxl3OE4xgvrXOL8Y_iu3WN1yGB1U/od6/public/values?alt=json");
+            allePersoner = await jsonData.json();
+            visPersoner();
+            addEventListenersToButtons();
+        }
+
+        function visPersoner() {
+            const container = document.querySelector(".data");
+            const templateContainer = document.querySelector("template");
+            container.innerHTML = "";
+
+            allePersoner.feed.entry.forEach((person) => {
+                if (filter == "alle" || filter == person.gsx$køn.$t) {
+                    let klon = templateContainer.cloneNode(true).content;
+                    klon.querySelector("h2").textContent = person.gsx$navn.$t;
+                    klon.querySelector(".github").textContent = person.gsx$github.$t;
+                    klon.querySelector("img").src = person.gsx$billede.$t;
+                    klon.querySelector(".alder").textContent = person.gsx$alder.$t;
+                    klon.querySelector(".køn").textContent = person.gsx$køn.$t;
+                    klon.querySelector(".email").textContent = person.gsx$email.$t;
+                    klon.querySelector(".hold").textContent = person.gsx$hold.$t;
+                    klon.querySelector(".historie").textContent = person.gsx$historie.$t;
+                    container.appendChild(klon);
+                    container.lastElementChild.addEventListener("click", () => {
+                        visSingle(person);
+                    })
+                }
+            })
+        }
+
+        function visSingle(person) {
+            document.querySelector("#popup").style.display = "block";
+            document.querySelector("#popup .luk").addEventListener("click", lukSingle);
+
+            document.querySelector(".enkeltPerson h2").textContent = person.gsx$navn.$t;
+            document.querySelector(".enkeltPerson .github").textContent = person.gsx$github.$t;
+            document.querySelector(".enkeltPerson .billede").src = person.gsx$billede.$t;
+            document.querySelector(".enkeltPerson .alder").textContent = person.gsx$alder.$t;
+            document.querySelector(".enkeltPerson .køn").textContent = person.gsx$køn.$t;
+            document.querySelector(".enkeltPerson .email").textContent = person.gsx$email.$t;
+            document.querySelector(".enkeltPerson .hold").textContent = person.gsx$hold.$t;
+            document.querySelector(".enkeltPerson .historie").textContent = person.gsx$historie.$t;
+        }
+
+        function lukSingle() {
+            document.querySelector("#popup").style.display = "none";
+        }
+
+        function addEventListenersToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+        }
+
+        function filtrering() {
+            filter = this.dataset.køn;
+            document.querySelector("h1").textContent = this.textContent;
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.classList.remove("valgt");
+            })
+            this.classList.add("valgt");
+            visPersoner();
+        }
+    </script>
+
+</body>
+
+</html>
