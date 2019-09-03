@@ -28,34 +28,6 @@
             border-radius: 10px;
         }
 
-        #popup {
-            position: fixed;
-            top: 0;
-            background-color: red;
-            width: 100%;
-            height: 100%;
-            display: none;
-        }
-
-        #popup .billede {
-            max-height: 50vh;
-            max-width: 30vw;
-        }
-
-        .luk {
-            position: fixed;
-            font-size: 2rem;
-            right: 0;
-        }
-
-        .indhold {
-            width: 40vw;
-            min-height: 40vh;
-            background: #fff;
-            margin: 4rem auto;
-            padding: 10px;
-        }
-
         .data {
             margin: 5px;
             display: grid;
@@ -79,28 +51,11 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-
     </style>
 
 </head>
 
 <body>
-
-    <div id="popup">
-        <button class="luk">X</button>
-        <section class="indhold">
-            <article class="enkeltPerson">
-                <h2></h2>
-                <p class="github"></p>
-                <img src="" alt="" class="billede">
-                <p class="alder"></p>
-                <p class="køn"></p>
-                <a href="" class="email"></a>
-                <p class="hold"></p>
-                <p class="historie"></p>
-            </article>
-        </section>
-    </div>
 
     <h1>Alle</h1>
     <nav>
@@ -159,30 +114,14 @@
                     klon.querySelector(".hold").textContent = person.gsx$hold.$t;
                     klon.querySelector(".historie").textContent = person.gsx$historie.$t;
                     container.appendChild(klon);
+
                     container.lastElementChild.addEventListener("click", () => {
-                        visSingle(person);
-                    })
+                        location.href = `06-single.html?github=${person.gsx$github.$t}`;
+                    });
                 }
             })
         }
 
-        function visSingle(person) {
-            document.querySelector("#popup").style.display = "block";
-            document.querySelector("#popup .luk").addEventListener("click", lukSingle);
-
-            document.querySelector(".enkeltPerson h2").textContent = person.gsx$navn.$t;
-            document.querySelector(".enkeltPerson .github").textContent = person.gsx$github.$t;
-            document.querySelector(".enkeltPerson .billede").src = person.gsx$billede.$t;
-            document.querySelector(".enkeltPerson .alder").textContent = person.gsx$alder.$t;
-            document.querySelector(".enkeltPerson .køn").textContent = person.gsx$køn.$t;
-            document.querySelector(".enkeltPerson .email").textContent = person.gsx$email.$t;
-            document.querySelector(".enkeltPerson .hold").textContent = person.gsx$hold.$t;
-            document.querySelector(".enkeltPerson .historie").textContent = person.gsx$historie.$t;
-        }
-
-        function lukSingle() {
-            document.querySelector("#popup").style.display = "none";
-        }
 
         function addEventListenersToButtons() {
             document.querySelectorAll(".filter").forEach(elm => {
@@ -199,7 +138,6 @@
             this.classList.add("valgt");
             visPersoner();
         }
-
     </script>
 
 </body>
