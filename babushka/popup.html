@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babushka</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            background-image: url(imgs/small/background.jpg);
+            background-size: contain;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        p {
+            font-family: 'Roboto', sans-serif;
+        }
+
+
+        h2 {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h3 {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h5 {
+            font-family: 'Roboto', sans-serif;
+            color: darkgrey;
+            margin: 0.1rem;
+        }
+
+
+
+        #splash {
+            background-image: url(imgs/small/BB.jpg);
+            background-size: contain;
+            height: 30vw;
+            background-position: center;
+        }
+
+        nav {
+            margin: 0;
+            display: flex;
+            text-align: center;
+            justify-content: space-around;
+            background-color: #FF8C04;
+            height: 8vh;
+            width: 100%;
+        }
+
+
+        button {
+            border: none;
+            background-color: #FF8C04;
+            margin: 0;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            color: #DD0000;
+        }
+
+        button {
+            font-size: 0.8rem;
+        }
+
+
+        #wrapper {
+            align-self: center;
+            display: flex;
+            justify-content: space-around;
+            height: 8.5vh;
+            padding: 0.6rem;
+            max-width: 100%;
+        }
+
+        .info p {
+            margin: 0.1rem;
+            font-size: 0.9rem;
+        }
+
+        #popup {
+            position: fixed;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        #popup .indhold {
+            width: 60vw;
+            min-height: 40vh;
+            margin: 4rem auto;
+            padding: 10px;
+            border: none;
+        }
+
+        #popup .billede {
+            max-height: 100vh;
+            max-width: 100vw;
+        }
+
+        .luk {
+            position: fixed;
+            font-size: 1.8rem;
+            right: 10vw;
+            top: 10vw;
+            border-radius: 30%;
+        }
+
+        .data {
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: repeat(1, 1fr);
+            width: 100%;
+            padding: 20px 0;
+            cursor: pointer;
+        }
+
+        .data article {
+            margin: 0 2rem 0 2rem;
+        }
+
+        article {
+            padding: 30px;
+            background-color: white;
+        }
+
+        .valgt {
+            color: #DD0000;
+        }
+
+        footer {
+            background-color: rgba(250, 250, 250, 0.3);
+        }
+
+
+        @media screen and (min-width: 501px) {
+            .data {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            #popup .indhold {
+                width: 60vw;
+            }
+
+            #popup .billede {
+                max-height: 100vh;
+                max-width: 100vw;
+            }
+
+            #splash {
+                max-height: 150px;
+            }
+        }
+
+        @media screen and (min-width: 750px) {
+
+            #popup .indhold {
+                width: 40vw;
+            }
+
+            #popup .billede {
+                max-height: 40vh;
+                max-width: 100vw;
+            }
+
+            .luk {
+                right: 20vw;
+                top: 4vw;
+            }
+
+        }
+
+        @media screen and (min-width: 1000px) {
+            .data {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="splash">
+    </div>
+
+    <nav>
+        <button class="filter" data-kategori="alle">Alle</button>
+        <button class="filter" data-kategori="forretter">Forretter</button>
+        <button class="filter" data-kategori="hovedretter">Hovedretter</button>
+        <button class="filter" data-kategori="desserter">Desserter</button>
+        <button class="filter" data-kategori="sideorders">Sideorders</button>
+        <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
+    </nav>
+
+    <section class="data"></section>
+
+
+    <template>
+        <article>
+            <img src="" alt="">
+            <h3 class="navn"></h3>
+            <p class="kort"></p>
+            <p class="pris"></p>
+            <img src="" alt="">
+        </article>
+    </template>
+
+    <div id="popup">
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltRet">
+                <img class="billede" src="" alt="billede">
+                <h5 class="oprindelse"></h5>
+                <h2 class="navn"></h2>
+                <p class="lang"></p>
+                <p class="pris"></p>
+            </article>
+        </section>
+    </div>
+
+    <footer>
+        <div id="wrapper">
+            <div class="info">
+                <p>Adresse:</p>
+                <p>Grønnegade 97</p>
+                <p>1234 København K</p>
+            </div>
+            <div class="info">
+                <p>Åbningstider:</p>
+                <p>Mandag - fredag: 10:30-22:00</p>
+                <p>Lørdag: 12:00-23:00</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let alleRetter = [];
+        let filter = "alle";
+
+        document.addEventListener("DOMContentLoaded", hentJson);
+
+        async function hentJson() {
+            const jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+            alleRetter = await jsonData.json();
+            visRetter();
+            addEventListenersToButtons();
+        }
+
+        function visRetter() {
+            const container = document.querySelector(".data");
+            const templateContainer = document.querySelector("template");
+            container.innerHTML = "";
+
+            alleRetter.feed.entry.forEach((ret) => {
+                if (filter == "alle" || filter == ret.gsx$kategori.$t) {
+                    let klon = templateContainer.cloneNode(true).content;
+                    klon.querySelector("img").src = `imgs/small/${ret.gsx$billede.$t}-sm.jpg`;
+                    klon.querySelector(".navn").textContent = ret.gsx$navn.$t;
+                    klon.querySelector(".kort").textContent = ret.gsx$kort.$t;
+                    klon.querySelector(".pris").textContent = `Pris: ${ret.gsx$pris.$t}kr.`;
+                    container.appendChild(klon);
+                    container.lastElementChild.addEventListener("click", () => {
+                        visSingle(ret);
+                    })
+                }
+            })
+
+        }
+
+        function visSingle(ret) {
+            document.querySelector("#popup").style.display = "block";
+            document.querySelector("#popup .luk").addEventListener("click", lukSingle);
+
+            document.querySelector(".enkeltRet .billede").src = `imgs/small/${ret.gsx$billede.$t}-sm.jpg`;
+            document.querySelector(".enkeltRet h2").textContent = ret.gsx$navn.$t;
+            document.querySelector(".enkeltRet .oprindelse").textContent = `Fra vores udvalg af ${ret.gsx$kategori.$t}. Stammer oprindeligt fra ${ret.gsx$oprindelse.$t}.`;
+            document.querySelector(".enkeltRet .lang").textContent = ret.gsx$lang.$t;
+            document.querySelector(".enkeltRet .pris").textContent = `Pris: ${ret.gsx$pris.$t}kr.`;
+        }
+
+        function lukSingle() {
+            document.querySelector("#popup").style.display = "none";
+        }
+
+        function addEventListenersToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+        }
+
+        function filtrering() {
+            filter = this.dataset.kategori;
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.classList.remove("valgt");
+            })
+            this.classList.add("valgt");
+            visRetter();
+        }
+    </script>
+
+</body>
+
+</html>
