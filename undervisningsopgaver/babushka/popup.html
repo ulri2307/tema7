@@ -99,7 +99,6 @@
         #popup .indhold {
             width: 60vw;
             min-height: 40vh;
-            background: white;
             margin: 4rem auto;
             padding: 10px;
             border: none;
@@ -127,8 +126,13 @@
             cursor: pointer;
         }
 
+        .data article {
+            margin: 0 2rem 0 2rem;
+        }
+
         article {
             padding: 30px;
+            background-color: white;
         }
 
         .valgt {
@@ -160,9 +164,6 @@
         }
 
         @media screen and (min-width: 750px) {
-            .data {
-                grid-template-columns: repeat(3, 1fr);
-            }
 
             #popup .indhold {
                 width: 40vw;
@@ -180,7 +181,7 @@
 
         }
 
-        @media screen and (min-width: 1025px) {
+        @media screen and (min-width: 1000px) {
             .data {
                 grid-template-columns: repeat(3, 1fr);
             }
